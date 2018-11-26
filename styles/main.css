@@ -1,0 +1,27 @@
+
+h1 {
+  color: hsla(0, 0%, 20%, 0.9);
+  font-weight: bold;
+  font-size: 22px;
+  padding-left: 15px;
+
+}
+
+@media screen and (max-width: 1024px) {
+  header.mdl-layout__header {
+    display: flex;
+  }
+}
+
+.mdl-layout__header{
+  height: 20px;
+  background-color: #e1bee7;
+}
+.mdl-grid{
+  align-items: center;
+  padding-left: 15px;
+
+}
+.mdl-list{
+  padding-left: 15px;
+}
