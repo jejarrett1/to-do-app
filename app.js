@@ -74,8 +74,8 @@ function onReady(){
       return todo != toDo;
     });
     renderTheUI(toDos);
-    // var temp = JSON.stringify(toDos);
-    // localStorage.setItem("toDos",temp);
+    var temp = JSON.stringify(toDos);
+    localStorage["toDos"]=temp;
   }
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
