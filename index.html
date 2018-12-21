@@ -1,32 +1,1226 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>To-Do App</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-</head>
-<body>
-  <header class="mdl-layout__header">
-    <h1>To-Do App</h1>
-  </header>
-  <main class="mdl-layout__content">
+<!-- HIT template: ImageTagging-v3.0 --><!-- Bootstrap v3.0.3 --><!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries -->
+<style type="text/css">.cell {
+    margin: 0 auto;
+    padding: 10px;
+    width: 100%;
+}
 
-      <form id="addToDoForm" class="mdl-grid">
-        <!-- <label for="newToDoText">New To-Do:</label> -->
-        <input type="text" class="mdl-textfield__input mdl-cell--8-col" id="newToDoText">
-        <button type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-cell">
-          <i class="material-icons">add</i>
-        </button>
-      </form>
+#pagenum {
+    text-align: center;
+    font-style: italic;
+}
 
-    <ul id ="toDoList" class="mdl-list">
-      <li class="mdl-list__item">
-      </li>
-    </ul>
-  </main>
-  <script src="app.js"></script>
-</body>
-</html>
+.wrapper {
+    width: 100%;
+}
+
+.page {
+    width: 100%;
+}
+
+.image>img {
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    width: 95%!important;
+}
+
+.active {
+    background-color: #717070;
+}
+
+.buttonframe {
+    position: fixed;
+    bottom: 0px;
+    left: 15vw;
+    right: 15vw;
+    height: 7vh;
+    /*background-color:olive;*/
+    margin-bottom: 0px!important;
+}
+
+div.form-group.buttonframe>label {
+    margin-left: 25vw;
+    background-color: white;
+    display: none;
+}
+
+#backButton {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 13vw!important;
+    height: 10vh!important;
+    /*margin-bottom: 15px;*/
+    font-size: 2vw;
+    background-color: #67a7d0;
+    font-weight: bold;
+}
+
+#nextButton {
+    position: fixed;
+    right: 0vw;
+    bottom: 0px;
+    height: 10vh!important;
+    /*margin-bottom: 15px;*/
+    font-size: 2vw;
+    width: 13vw!important;
+    background-color: #94ca79;
+    font-weight: bold;
+}
+
+.optionButton {
+    /*width: 13vw!important;*/
+    /*height: 10vh!important;*/
+    /*margin-bottom: 15px;*/
+    font-size: 2vw;
+    height: 100%;
+    width: auto;
+}
+
+.pageNumber {
+    position: fixed;
+    top: 0px;
+    /*left: 45vw;*/
+    right: 0px;
+    background-color: white;
+    font-size: 25px;
+
+    /* width:30vw;*/
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.leftImage {
+    margin: 0px;
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+.leftImage>img {
+    border: 5px solid blue;
+    max-width: 800px;
+    margin-bottom: 10vh;
+}
+
+.rightImage>img {
+    border: 5px solid #008000;
+    max-width: 400px;
+}
+
+.rightImage {
+    position: fixed!important;
+    right: 5px;
+
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+* {box-sizing: border-box;}
+
+.img-comp-container {
+  position: relative;
+  height: 700px; /*should be the same height as the images*/
+}
+
+.img-comp-img {
+  position: absolute;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.img-comp-img img {
+  display: block;
+  vertical-align: middle;
+}
+
+.img-comp-slider {
+  position: absolute;
+  z-index: 9;
+  cursor: ew-resize;
+  /*set the appearance of the slider:*/
+  width: 40px;
+  height: 40px;
+  background-color: #2196F3;
+  opacity: 0.7;
+  border-radius: 50%;
+}
+
+.fullScreenImage {
+    width: 100vh!important;
+    height: 100vh!important;
+    z-index: 100000;
+    position: fixed!important;
+    top: 0px;
+    left: 0px;
+    /*background-color:blue;*/
+    /*    margin-left: 20vw;
+    margin-right: 20vw;*/
+}
+
+.fullScreenImage>img {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 100vw;
+    max-width: 100vh;
+}
+
+.instructionPanel {}
+
+body {
+    background-color: darkgrey!important;
+}
+
+.container {
+    /*max-height: 800px;*/
+    /*background-color:darkgrey;*/
+}
+
+@media(max-width: 1023px) {
+    .instructionPanel {
+        font-size: 1.3vw;
+    }
+}
+
+@media(max-width: 700px) {}
+</style>
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" /><!-- The following snippet enables the 'responsive' behavior on smaller screens --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" integrity="sha384-s1ITto93iSMDxlp/79qhWHi+LsIi9Gx6yL+cOKDuymvihkfol83TYbLbOw+W/wv4" crossorigin="anonymous"></script>
+<meta content="width=device-width,initial-scale=1" name="viewport" /><!-- Instructions -->
+<section class="container" id="TaggingOfAnImage">
+<div class="row">
+<div class="col-xs-12 col-md-12 instructionPanel" name="instructions"><!-- Instructions -->
+<div class="panel panel-primary" style="margin-bottom: 2px!important"><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"> <strong>Image Tagging Instructions (Click to Expand/Collapse)</strong> </a></div>
+
+<div class="panel panel-primary instructionPanel" id="instructionBody" style="margin-bottom: 2px!important;">
+<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;font-size:15px;font-family:"><strong>Description</strong>: Please help us validate destruction caused by Hurricane Michael. We want to identify any destruction caused to buildings.</p>
+
+<ul>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Destoryed&nbsp;</strong>[Z] If there is no longer a standing structure on the building footprint.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Damaged</strong> [X] If there is damage present but the building itself is still present.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Minor/No Damage&nbsp;</strong>[C] If the building looks to have suffered no major structural damage.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Minor/Poor Image&nbsp;</strong>[V] If the image is poor quality or you are absolutely unsure.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Left&nbsp;</strong>[Q] Move slide bar to the left to reveal post event imagery.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;">Select <strong>Right&nbsp;</strong>[W] Move slide bar to the right to reveal pre event imagery.</li>
+	<li style="margin-top: 0in; margin-right: 0in; margin-bottom: 8pt; font-size: 15px; font-family: Calibri, sans-serif;"><strong>Additional Keyboard Bindings</strong> - Back = Backspace Key and &nbsp;Next/Submit = Spacebar</li>
+</ul>
+
+<h3><strong>DESTROYED</strong></h3>
+<img height="700" src="https://s3.amazonaws.com/geohive//harv_ex/Destroyed_1.png" width="700" /> <img height="700" src="https://s3.amazonaws.com/geohive//harv_ex/Destroyed_2.png" width="700" />
+<h3><strong>DAMAGED</strong></h3>
+<img height="700" src="https://s3.amazonaws.com/geohive//Damaged.jpg" width="700" /> <img height="700" src="https://s3.amazonaws.com/geohive//Damaged_2.jpg" width="700" />
+<h3><strong>MINOR/NO DAMAGE</strong></h3>
+<img height="700" src="https://s3.amazonaws.com/geohive//NoDamage_1.jpg" width="700" /> <img height="400" src="https://s3.amazonaws.com/geohive//NoDamage_2.jpg" width="700" /></div>
+</div>
+<!-- End Instructions --><!-- Image Tagging Layout --><!-- Page start -->
+
+<div class="wrapper">
+<div class="page" id="1">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url1_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url1_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page1">Classifications:</label>
+
+<center><input class="optionButton" name="Image 1" onclick="setAnswer('Image 1', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 1" onclick="setAnswer('Image 1', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 1" onclick="setAnswer('Image 1', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 1" onclick="setAnswer('Image 1', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+<script>
+
+                    $("#submitButton").hide();
+                    
+</script></div>
+</div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="2" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url2_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url2_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page2">Classifications:</label>
+
+<center><input class="optionButton" name="Image 2" onclick="setAnswer('Image 2', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 2" onclick="setAnswer('Image 2', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 2" onclick="setAnswer('Image 2', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 2" onclick="setAnswer('Image 2', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+                $("#submitButton").hide();
+</script></div>
+</div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="3" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url3_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url3_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page3">Classifications:</label>
+
+<center><input class="optionButton" name="Image 3" onclick="setAnswer('Image 3', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 3" onclick="setAnswer('Image 3', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 3" onclick="setAnswer('Image 3', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 3" onclick="setAnswer('Image 3', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="4" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url4_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url4_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page4">Classifications:</label>
+
+<center><input class="optionButton" name="Image 4" onclick="setAnswer('Image 4', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 4" onclick="setAnswer('Image 4', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 4" onclick="setAnswer('Image 4', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 4" onclick="setAnswer('Image 4', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="5" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url5_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url5_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page5">Classifications:</label>
+
+<center><input class="optionButton" name="Image 5" onclick="setAnswer('Image 5', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 5" onclick="setAnswer('Image 5', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 5" onclick="setAnswer('Image 5', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 5" onclick="setAnswer('Image 5', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="6" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url6_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url6_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page6">Classifications:</label>
+
+<center><input class="optionButton" name="Image 6" onclick="setAnswer('Image 6', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 6" onclick="setAnswer('Image 6', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 6" onclick="setAnswer('Image 6', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 6" onclick="setAnswer('Image 6', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="7" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url7_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url7_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page7">Classifications:</label>
+
+<center><input class="optionButton" name="Image 7" onclick="setAnswer('Image 7', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 7" onclick="setAnswer('Image 7', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 7" onclick="setAnswer('Image 7', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 7" onclick="setAnswer('Image 7', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="8" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url8_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url8_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page8">Classifications:</label>
+
+<center><input class="optionButton" name="Image 8" onclick="setAnswer('Image 8', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 8" onclick="setAnswer('Image 8', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 8" onclick="setAnswer('Image 8', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 8" onclick="setAnswer('Image 8', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="9" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url9_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url9_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page9">Classifications:</label>
+
+<center><input class="optionButton" name="Image 9" onclick="setAnswer('Image 9', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 9" onclick="setAnswer('Image 9', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 9" onclick="setAnswer('Image 9', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 9" onclick="setAnswer('Image 9', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="next();" style="width:300px; height:50px;" type="button" value="Next" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --><!-- Page start -->
+
+<div class="page" id="10" style="display: none;">
+<div class="cell">
+<div class="col-xs-12 col-sm-12 fields">
+<div class="img-comp-container">
+<div class="img-comp-img"><img alt="image_url" height="700" src="${image_url10_post}" width="700" /></div>
+
+<div class="img-comp-img img-comp-overlay"><img alt="image_url" height="700" src="${image_url10_pre}" width="700" /></div>
+</div>
+
+<div class="form-group buttonframe"><label class="group-label page10">Classifications:</label>
+
+<center><input class="optionButton" name="Image 10" onclick="setAnswer('Image 10', 'Destroyed');" type="button" value="Destroyed" /> <input class="optionButton" name="Image 10" onclick="setAnswer('Image 10', 'Damaged');" type="button" value="Damaged" /> <input class="optionButton" name="Image 10" onclick="setAnswer('Image 10', 'Minor/No Damage');" type="button" value="Minor/No Damage" /><input class="optionButton" name="Image 10" onclick="setAnswer('Image 10', 'Poor Image');" type="button" value="Poor Image" /></center>
+</div>
+<br />
+<input id="backButton" name="Back" onclick="back();" style="width:300px; height:50px;" type="button" value="Back" /> <input id="nextButton" name="Next" onclick="submitAll();" style="width:300px; height:50px;" type="submit" value="Submit All" /></div>
+</div>
+<script>
+            $("#submitButton").hide();
+            </script></div>
+<!-- Page end --></div>
+</section>
+
+<p><input id="Image 1" name="Image 1" type="hidden" /> <input id="Image 2" name="Image 2" type="hidden" /> <input id="Image 3" name="Image 3" type="hidden" /> <input id="Image 4" name="Image 4" type="hidden" /> <input id="Image 5" name="Image 5" type="hidden" /> <input id="Image 6" name="Image 6" type="hidden" /> <input id="Image 7" name="Image 7" type="hidden" /> <input id="Image 8" name="Image 8" type="hidden" /> <input id="Image 9" name="Image 9" type="hidden" /> <input id="Image 10" name="Image 10" type="hidden" /> <!-- End Image Tagging Layout --> <!-- Open internal style sheet -->
+<style type="text/css">#collapseTrigger {
+        color: #fff;
+        display: block;
+        text-decoration: none;
+    }
+
+    #submitButton {
+        white-space: normal;
+    }
+
+    .image {
+        margin-bottom: 15px;
+    }
+
+    .radio:first-of-type {
+        margin-top: -5px;
+    }
+</style>
+<!-- Close internal style sheet --> <!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries --> <script>
+    var currentSelections = [];
+    $(document).ready(function() {
+        var bns = $('.optionButton');
+        // bns.on("click", function() {
+
+        //     if ($(this).hasClass("active")){
+        //         $(this).toggleClass("active");
+        //     } else {
+        //         $(this).toggleClass("active");
+        //         var selectedVal = $(this).value;
+        //     }
+
+        //     // var selectedVal = $(this).value;
+        //     // var selectedVal = $(this).attributes[4].nodeValue;
+        //     $("#" + current.toString()).find("center input.optionButton").each(function() {
+        //         if ($(this).hasClass("active")) {
+        //             $(this).toggleClass("active");
+
+        //         };
+        //     });
+
+
+
+        //     $(this).toggleClass("active");
+        //     updatePage(current);
+        // });
+
+
+        $(".leftImage").on("click", function() {
+            $(this).toggleClass("fullScreenImage");
+
+        });
+
+        updatePage(current);
+        // $('#optionButton').click(function () {
+        //     $(this).toggleClass("active"); //addCss("active");
+        // });
+        // Instructions expand/collapse
+        var content = $('#instructionBody');
+        var trigger = $('#collapseTrigger');
+        // content.hide();
+        $('.collapse-text').text('(Click to expand)');
+        trigger.click(function() {
+            content.toggle();
+            var isVisible = content.is(':visible');
+            if (isVisible) {
+                $('.collapse-text').text('(Click to collapse)');
+            } else {
+                $('.collapse-text').text('(Click to expand)');
+            }
+        });
+        // end expand/collapse
+    });
+
+
+
+    // ##keyboard_codes
+
+
+    // Not Cloud, Industrail, Cloud, None of the Above
+
+    //     keyboard z x c v
+
+    //     Not Cloud 90 z
+    //     Unsure 88 x
+    //     Cloud 67 c
+    //     None of the Above 86 v
+
+    //     spacebar is next 32
+    //     backspace previous 8
+
+
+
+
+function initComparisons() {
+  var x, i;
+  /*find all elements with an "overlay" class:*/
+  x = document.getElementsByClassName("img-comp-overlay");
+  for (i = 0; i < x.length; i++) {
+    /*once for each "overlay" element:
+    pass the "overlay" element as a parameter when executing the compareImages function:*/
+    compareImages(x[i]);
+  }
+  function compareImages(img) {
+    var slider, img, clicked = 0, w, h;
+    /*get the width and height of the img element*/
+    w = img.offsetWidth;
+    h = img.offsetHeight;
+    /*set the width of the img element to 50%:*/
+    img.style.width = (w / 2) + "px";
+    /*create slider:*/
+    slider = document.createElement("DIV");
+    slider.setAttribute("class", "img-comp-slider");
+    /*insert slider*/
+    img.parentElement.insertBefore(slider, img);
+    /*position the slider in the middle:*/
+    slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+    slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+    /*execute a function when the mouse button is pressed:*/
+    slider.addEventListener("mousedown", slideReady);
+    /*and another function when the mouse button is released:*/
+    window.addEventListener("mouseup", slideFinish);
+    /*or touched (for touch screens:*/
+    slider.addEventListener("touchstart", slideReady);
+     /*and released (for touch screens:*/
+    window.addEventListener("touchstop", slideFinish);
+    window.addEventListener("keydown", clickSlide);
+    
+    function slideReady(e) {
+      /*prevent any other actions that may occur when moving over the image:*/
+      e.preventDefault();
+      /*the slider is now clicked and ready to move:*/
+      clicked = 1;
+      /*execute a function when the slider is moved:*/
+      window.addEventListener("mousemove", slideMove);
+      window.addEventListener("touchmove", slideMove);
+    }
+    function slideFinish() {
+      /*the slider is no longer clicked:*/
+      clicked = 0;
+    }
+    function slideMove(e) {
+      var pos;
+      /*if the slider is no longer clicked, exit this function:*/
+      if (clicked == 0) return false;
+      /*get the cursor's x position:*/x
+      pos = getCursorPos(e)
+      /*prevent the slider from being positioned outside the image:*/
+      if (pos < 0) pos = 0;
+      if (pos > w) pos = w;
+      /*execute a function that will resize the overlay image according to the cursor:*/
+      slide(pos);
+    }
+    function getCursorPos(e) {
+      var a, x = 0;
+      e = e || window.event;
+      /*get the x positions of the image:*/
+      a = img.getBoundingClientRect();
+      /*calculate the cursor's x coordinate, relative to the image:*/
+      x = e.pageX - a.left;
+      /*consider any page scrolling:*/
+      x = x - window.pageXOffset;
+      return x;
+    }
+    function clickSlide(e){
+      var pos;
+      var q= e.keyCode;
+      if (q==81){
+      pos = 0;
+      }
+      if (q==87){
+      pos = 700;
+      }
+      slide(pos);
+    }
+    function slide(x) {
+      /*resize the image:*/
+      img.style.width = x + "px";
+      /*position the slider:*/
+      slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+    }
+  }
+}
+
+
+
+
+
+    $(document).keydown(function(e) {
+    
+        if (e.keyCode == 8) {
+            console.log("backspace pressed");
+            if (current != 1) {
+                if ($("#" + current.toString()).find("#backButton").is(":visible")) {
+                    back();
+                }
+            }
+
+            return false;
+        };
+
+        if (e.keyCode == 32) {
+            console.log("spacebar pressed");
+            if (current != 10) {
+                if ($("#" + current.toString()).find("#nextButton").is(":visible")) {
+                    next();
+                }
+            } else {
+                if ($("#" + current.toString()).find("#nextButton").is(":visible")) {
+                    submitAll();
+                }
+            }
+
+            return false;
+        };
+
+
+        // if (e.keyCode == 38) {
+        //     console.log("up pressed aka is a building");
+        //     $("#" + current.toString()).find('input[type="button"][value="Building"]').click();
+
+        // };
+
+        /// Keycodes here
+             if (e.keyCode == 90) {
+
+            $("#" + current.toString()).find('input[type="button"][value="Destroyed"]').click();
+            return false;
+        };
+
+
+        if (e.keyCode == 88) {
+
+            $("#" + current.toString()).find('input[type="button"][value="Damaged"]').click();
+            return false;
+        };
+
+        if (e.keyCode == 67) {
+
+            $("#" + current.toString()).find('input[type="button"][value="Minor/No Damage"]').click();
+            return false;
+        };
+
+        if (e.keyCode == 86) {
+
+            $("#" + current.toString()).find('input[type="button"][value="Poor Image"]').click();
+            return false;
+        };
+
+
+    });
+
+
+
+    //written by Morris Alper -- January 2013
+    //you may copy with attribution
+    //Navigation.js: provides functionality for multi-page surveys
+    var current = 1; //the current page
+    var moved = []; //pages which have been moved by the randomization
+    var movedto = [];
+    //takes randomization into account
+    function effectivePage(pagenum) {
+        var index = moved.indexOf(pagenum);
+        if (index == -1) {
+            return pagenum;
+        } else {
+            return movedto[index];
+        }
+    }
+    var numberText = []; //stores divs which need to be updated when the page changes
+    var pntexts = []; //texts in them
+    function makePageNumber(text) { //text: something like "Page 1 / 4"
+        var temp = text.split(1);
+        var texts = [temp[0], temp[1]];
+        //the following is needed if there are more 1's (e.g. if the total # of pages contains the digit 1)
+        if (temp.length > 2) {
+            for (var i = 2; i < temp.length; i++) {
+                texts[1] += 1 + temp[i];
+            }
+        }
+        document.writeln("<p><div id='pagenumberdiv" + numberText.length + "' class='pageNumber'></div></p>");
+        loadPageNumber(("pagenumberdiv" + numberText.length), texts);
+    }
+
+    function loadPageNumber(id, texts) {
+        var newone = document.getElementById(id);
+        numberText.push(newone);
+        pntexts.push(texts);
+        updatePageNumbers();
+    }
+
+    function updatePageNumbers() {
+        for (var i = 0; i < numberText.length; i++) {
+            numberText[i].innerHTML = pntexts[i][0] + current + pntexts[i][1];
+        }
+    }
+    //make one vanish and the None of the Above appear
+    function swap(vanish, appear) {
+        document.getElementById(vanish).style.display = "none";
+        //document.getElementById(appear).style.display = "inline";
+        document.getElementById(appear).style.display = "";
+        updatePageNumbers();
+    }
+    //go to the next page
+    function next() {
+        current++;
+        swap(effectivePage(current - 1), effectivePage(current));
+        updatePage(current);
+    }
+
+    function back() {
+        current--;
+        swap(effectivePage(current + 1), effectivePage(current));
+    }
+    //shuffles the array
+    //taken from http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
+    Array.prototype.shuffle = function() {
+        for (var i = this.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = this[i];
+            this[i] = this[j];
+            this[j] = tmp;
+        }
+        return this;
+    }
+    //randomize the order of trials i through j
+    //note: don't call this on the same index twice!
+    function randomize(i, j) {
+        ar = [];
+        ar2 = [];
+        for (var k = i; k <= j; k++) {
+            ar.push(k);
+            ar2.push(k);
+        }
+        ar2.shuffle();
+        for (var k = 0; k < ar.length; k++) {
+            if (moved.indexOf(ar[k]) != -1) {
+                alert("Error: same index randomized twice.");
+            } else {
+                moved.push(ar[k]);
+                movedto.push(ar2[k]);
+            }
+        }
+    }
+
+    function updatePage(pageNum) {
+        var selections = [];
+        // GRAB ALL SELECTIONS
+
+        $("#" + pageNum.toString()).find("center input.optionButton").each(function() {
+            if ($(this).hasClass("active")) {
+                selections.push($(this).val())
+            }
+        });
+        var noneSelected = (currentSelections.length === 1) && (currentSelections.includes("None of the Above"));
+        if (noneSelected) {
+            var index = selections.indexOf("None of the Above");
+            selections.splice(index, 1);
+            $("#" + pageNum.toString()).find("center input.optionButton").each(function() {
+                if ($(this).hasClass("active")) {
+                    if ($(this).val() == "None of the Above") {
+                        $(this).toggleClass("active");
+                    }
+                }
+            });
+        };
+        // IF None of the Above IS INCLUDED, REMOVE ALL None of the Above SELECTIONS
+        // if (selections.includes("None of the Above")) {
+
+        //     selections = ['None of the Above']
+        //     $("#" + pageNum.toString()).find("center input.optionButton").each(function() {
+        //         if ($(this).hasClass("active")) {
+        //             if ($(this).val() != "None of the Above") {
+        //                 $(this).toggleClass("active");
+        //             }
+        //         }
+        //     });
+
+
+        // };
+        if (selections.length != 0) {
+            $("#" + pageNum.toString()).find("#nextButton").show();
+        } else {
+            $("#" + pageNum.toString()).find("#nextButton").hide();
+        }
+        //         alert(JSON.stringify(selections));
+        $(".page" + current).text("Classifications: " + JSON.stringify(selections));
+        if (pageNum != 10) {
+            document.getElementById("Image " + current).value = JSON.stringify(selections);
+        };
+        // window.alert("Selections: "+JSON.stringify(selections));
+        currentSelections = selections;
+    };
+
+    function submitAll() {
+        var pageNum = current;
+        var selections = [];
+        $("#" + pageNum.toString()).find("center input.optionButton").each(function() {
+            if ($(this).hasClass("active")) {
+                selections.push($(this).val())
+            }
+        });
+
+        // if (selections.includes("None of the Above")) {
+        //     selections = ['None of the Above']
+        //     $("#" + pageNum.toString()).find("center input.optionButton").each(function() {
+        //         if ($(this).hasClass("active")) {
+        //             if ($(this).val() != "None of the Above") {
+        //                 $(this).toggleClass("active");
+        //             }
+        //         }
+        //     });
+        // };
+        //
+        $(".page" + current).text("Classifications: " + JSON.stringify(selections));
+        document.getElementById("Image " + current).value = JSON.stringify(selections);
+    };
+
+    function setAnswer(i, a) {
+
+
+
+        var selectedAnswer = a;
+        var selectedButton = $("#" + current.toString()).find('input[type="button"][value="' + a + '"]');
+        // selectedButton.toggleClass("active");
+
+        if (selectedButton.hasClass("active")) {
+            selectedButton.toggleClass("active")
+        };
+
+        $("#" + current.toString()).find("center input.optionButton").each(function() {
+            if ($(this).hasClass("active")) {
+                $(this).toggleClass("active");
+
+            }
+        });
+        if (!selectedButton.hasClass("active")) {
+            selectedButton.toggleClass("active")
+        };
+
+        updatePage(current)
+        // window.alert(i);
+        // window.alert(a);
+        //         var selections = getAnswers(current);
+        //         document.getElementById(i).value = JSON.stringify(selections);
+        //         newvals = document.getElementById(i).value;
+        //         $(".page"+current).text("Classifications: "+newvals);
+    }
+    </script></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!-- <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p> --><!-- <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p> --><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>--><!--<p>&nbsp;</p>-->
+
+<center><script>
+	initComparisons();
+    makePageNumber("Page 1 / 10");
+    </script></center>
+
